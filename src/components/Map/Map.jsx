@@ -24,11 +24,11 @@ const Map = ({ coordinates, setCoordinates, setBounds}) => {
             lng: e.center.lng
           })
           setBounds({
-            ne: e.bounds.ne,
-            sw: e.bounds.sw,
+            ne: e.marginBounds.ne,
+            sw: e.marginBounds.sw,
           })
         }}
-        onChildClick={''}
+        // onChildClick={''}
       >
 
       </GoogleMapReact>
