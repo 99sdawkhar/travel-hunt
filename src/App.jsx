@@ -11,7 +11,7 @@ import Footer from './components/Footer/Footer';
 const App = () => {
   const [places, setPlaces] = useState([]);
   const [coordinates, setCoordinates] = useState(null);
-  const [bounds, setBounds] = useState(null);
+  const [bounds, setBounds] = useState({});
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -26,6 +26,14 @@ const App = () => {
       })
       .catch((err) => console.log(err));
   }, [])
+
+  useEffect(() => {
+    getPlacesData(bounds.ne, bounds.sw)
+      .then((data) => {
+        setPlaces(data)
+      })
+      .catch((err) => console.log(err));
+  }, [coordinates, bounds])
 
   return (
     <div>
