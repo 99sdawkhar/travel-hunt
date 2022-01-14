@@ -46,17 +46,21 @@ const App = () => {
   },[rating])
 
   useEffect(() => {
-    getPlacesData(type, bounds.ne, bounds.sw)
+    if (bounds.ne && bounds.sw) {
+      getPlacesData(type, bounds.ne, bounds.sw)
       .then((data) => {
-        setPlaces(data)
+        setPlaces(data?.filter((place) => place.name))
+        setFilteredPlaces([]);
+        setIsLoading(false);
       })
       .catch((err) => console.log(err));
-  }, [type, coordinates, bounds])
+    }
+  }, [type, bounds])
 
   return (
     <div>
       <CssBaseline />
-      <Header />
+      <Header setCoordinates={setCoordinates} />
       <Grid container spacing={3} style={{ width: '100%' }}>
         <Grid item xs={12} md={4}>
           <List 
