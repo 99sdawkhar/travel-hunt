@@ -6,9 +6,10 @@ import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 
 import useStyles from "./styles";
 
-const Map = ({ coordinates, setCoordinates, setBounds, places }) => {
+const Map = ({ coordinates, setCoordinates, setBounds, places, setClickedChild }) => {
   const classes = useStyles();
   const isDesktop = useMediaQuery("(min-width:600px)");
+
   return (
     <div className={classes.mapContainer}>
       <GoogleMapReact
@@ -28,7 +29,7 @@ const Map = ({ coordinates, setCoordinates, setBounds, places }) => {
             sw: e.marginBounds.sw,
           });
         }}
-        // onChildClick={''}
+        onChildClick={(child) => setClickedChild(child)}
       >
         {places?.map((place, i) => (
           <div
