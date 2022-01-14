@@ -1,6 +1,8 @@
 import { CssBaseline, Grid } from '@material-ui/core'
 import React, { useEffect, useState } from 'react';
 
+import './index.css'
+
 import { getPlacesData } from './api';
 
 import Header from './components/Header/Header'
@@ -10,7 +12,7 @@ import Footer from './components/Footer/Footer';
 
 const App = () => {
   const [places, setPlaces] = useState([]);
-  const [coordinates, setCoordinates] = useState(null);
+  const [coordinates, setCoordinates] = useState({});
   const [bounds, setBounds] = useState({});
 
   useEffect(() => {
@@ -48,6 +50,7 @@ const App = () => {
             coordinates={coordinates}
             setCoordinates={setCoordinates}
             setBounds={setBounds}
+            places={places}
           />
         </Grid>
       </Grid>
