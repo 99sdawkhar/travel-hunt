@@ -44,6 +44,7 @@ const App = () => {
   useEffect(() => {
     const filterPlaces = places?.filter((place) => place.rating > rating);
     setFilteredPlaces(filterPlaces);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[rating])
 
   useEffect(() => {
@@ -63,6 +64,7 @@ const App = () => {
       })
       .catch((err) => console.log(err));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, bounds])
 
   return (

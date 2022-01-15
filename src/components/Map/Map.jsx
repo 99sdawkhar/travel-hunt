@@ -69,7 +69,9 @@ const Map = ({ coordinates, setCoordinates, setBounds, places, setClickedChild, 
             className={classes.weatherInfo}
           >
             <figure>
-              <img src={`http://openweathermap.org/img/w/${weatherInfo.weather[0].icon}.png`}/>
+              <img src={`http://openweathermap.org/img/w/${weatherInfo.weather[0].icon}.png`} 
+                alt={weatherInfo.weather[0].main}
+              />
             </figure>
           </div>
         )}
