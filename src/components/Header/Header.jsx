@@ -9,7 +9,7 @@ const Header = ({ setCoordinates }) => {
   const classes = useStyles();
   const [autoComplete, setAutoComplete] = useState(null);
 
-  const onLoad = (autoC) => setAutoComplete(autoC);
+  const onLoad = (complete) => setAutoComplete(complete);
 
   const onPlaceChanged = () => {
     const lat = autoComplete.getPlace().geometry.location.lat();
