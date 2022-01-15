@@ -21,9 +21,9 @@ const List = ({ places, clickedChild, isLoading, type, setType, rating, setRatin
         Find Restaurants, Hotels &amp; Attractions around you
       </Typography>
       {isLoading ? 
-      <div className={classes.loading} >
+      (<div className={classes.loading} >
         <CircularProgress size="5rem" />
-      </div> : (
+      </div>) : (
         <>
           <FormControl className={classes.formControl}>
             <InputLabel>Type</InputLabel>

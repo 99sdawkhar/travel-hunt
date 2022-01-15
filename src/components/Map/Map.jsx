@@ -1,15 +1,15 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
-import { Paper, Typography, useMediaQuery } from "@material-ui/core";
+import { Paper, Typography, useMediaQuery, Tooltip } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 
 import useStyles from "./styles";
 
-const Map = ({ coordinates, setCoordinates, setBounds, places, setClickedChild }) => {
+const Map = ({ coordinates, setCoordinates, setBounds, places, setClickedChild, weatherData }) => {
   const classes = useStyles();
   const isDesktop = useMediaQuery("(min-width:600px)");
-
+  const weatherInfo = weatherData.data;
   return (
     <div className={classes.mapContainer}>
       <GoogleMapReact
@@ -18,7 +18,6 @@ const Map = ({ coordinates, setCoordinates, setBounds, places, setClickedChild }
         center={coordinates}
         defaultZoom={14}
         margin={[50, 50, 50, 50]}
-        options={""}
         onChange={(e) => {
           setCoordinates({
             lat: e.center.lat,
@@ -40,27 +39,40 @@ const Map = ({ coordinates, setCoordinates, setBounds, places, setClickedChild }
           >
             {isDesktop ? (
               <Paper elevation={3} className={classes.paper}>
-                <Typography variant="subtitle" className={classes.typography}>
+                <Typography gutterBottom variant="subtitle" className={classes.typography}>
                   {place.name}
                 </Typography>
                 <figure className={classes.mapImageContainer}>
-                <img
-                  className={classes.img}
-                  src={
-                    place.photo
-                      ? place.photo.images.large.url
-                      : "https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                  }
-                  alt={place.name}
-                />
+                  <img
+                    className={classes.img}
+                    src={
+                      place.photo
+                        ? place.photo.images.large.url
+                        : "https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                    }
+                    alt={place.name}
+                  />
                 </figure>
                 <Rating value={Number(place.rating)} size="small" readOnly />
               </Paper>
             ) : (
-              <LocationOnOutlinedIcon color="primary" fontSize="large" />
+              <Tooltip title={place.name}>
+                <LocationOnOutlinedIcon color="primary" fontSize="large" className={classes.locationIcon} />
+              </Tooltip>
             )}
           </div>
         ))}
+        {weatherInfo && (
+          <div
+            lat={weatherInfo.coord.lat}
+            lng={weatherInfo.coord.lon}
+            className={classes.weatherInfo}
+          >
+            <figure>
+              <img src={`http://openweathermap.org/img/w/${weatherInfo.weather[0].icon}.png`}/>
+            </figure>
+          </div>
+        )}
       </GoogleMapReact>
     </div>
   );

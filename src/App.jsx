@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import './index.css'
 
-import { getPlacesData } from './api';
+import { getCurrentWeather, getPlacesData } from './api';
 
 import Header from './components/Header/Header'
 import Map from './components/Map/Map';
@@ -12,6 +12,7 @@ import Footer from './components/Footer/Footer';
 
 const App = () => {
   const [places, setPlaces] = useState([]);
+  const [weatherData, setWeatherData] = useState([])
   const [filteredPlaces, setFilteredPlaces] = useState([]);
 
   const [type, setType] = useState('restaurants');
@@ -34,7 +35,7 @@ const App = () => {
     });
     getPlacesData()
       .then((data) => {
-        setPlaces(data)
+        setPlaces(data?.filter((place) => place.name && place.num_reviews > 0))
         setIsLoading(false);
       })
       .catch((err) => console.log(err));
@@ -47,9 +48,16 @@ const App = () => {
 
   useEffect(() => {
     if (bounds.ne && bounds.sw) {
+      setIsLoading(true);
+      getCurrentWeather(coordinates.lat, coordinates.lng)
+      .then((data) => {
+        setWeatherData(data);
+      })
+      .catch((err) => console.log(err));
+
       getPlacesData(type, bounds.ne, bounds.sw)
       .then((data) => {
-        setPlaces(data?.filter((place) => place.name))
+        setPlaces(data?.filter((place) => place.name && place.num_reviews > 0))
         setFilteredPlaces([]);
         setIsLoading(false);
       })
@@ -61,10 +69,10 @@ const App = () => {
     <div>
       <CssBaseline />
       <Header setCoordinates={setCoordinates} />
-      <Grid container spacing={3} style={{ width: '100%' }}>
+      <Grid container spacing={3} style={{ width: '100%', marginTop:"10px" }}>
         <Grid item xs={12} md={4}>
           <List 
-            places={filteredPlaces.length ? filteredPlaces : places}
+            places={filteredPlaces.length > 0 ? filteredPlaces : places}
             clickedChild={clickedChild}
             isLoading={isLoading}
             type={type}
@@ -80,6 +88,7 @@ const App = () => {
             setBounds={setBounds}
             places={filteredPlaces.length ? filteredPlaces : places}
             setClickedChild={setClickedChild}
+            weatherData={weatherData}
           />
         </Grid>
       </Grid>
