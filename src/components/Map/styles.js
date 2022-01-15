@@ -49,5 +49,13 @@ export default makeStyles(() => ({
     top: '0',
     zIndex: 100,
     transform: 'scale(1.5)',
+  },
+  dummyMap: {
+    width: '100%',
+    height: 'inherit',
+    '& img': {
+      width: '100%',
+      height: 'inherit',
+    }
   }
 }));
