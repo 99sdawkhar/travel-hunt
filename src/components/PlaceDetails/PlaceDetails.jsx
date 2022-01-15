@@ -27,7 +27,7 @@ const PlaceDetails = ({ place, selected, refProp }) => {
           <Typography gutterBottom varinat="subtitle">out of {place.num_reviews} reviews</Typography>
         </Box>
         <Box display="flex" justifyContent="space-between">
-          <Typography varinat="subtitle">Price</Typography>
+          <Typography varinat="subtitle">Price Range</Typography>
           <Typography gutterBottom varinat="subtitle">{place.price_level}</Typography>
         </Box>
         <Box display="flex" justifyContent="space-between">
@@ -36,7 +36,9 @@ const PlaceDetails = ({ place, selected, refProp }) => {
         </Box>
         {place?.awards?.map((award) => (
           <Box key={award.display_name} my={1} display="flex" justifyContent="space-between" alignItems="center">
-            <img src={award.images.small} alt={award.display_name} />
+            <figure>
+              <img src={award.images.small} alt={award.display_name} />
+            </figure>
             <Typography varinat="subtitle2" color="textSecondary">{award.display_name}</Typography>
           </Box>
         ))}

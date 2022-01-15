@@ -21,7 +21,7 @@ const Header = ({ setCoordinates }) => {
     <AppBar position="static">
       <Toolbar className={classes.toolbar}>
         <Typography variant="h1" className={classes.logo}>
-          <a href="/">Travel Hunt</a>
+          <a href="/" title="Travel Hunt">Travel Hunt</a>
         </Typography>
         <Box display="flex">
           <Typography variant="h6" className={classes.title}>
@@ -35,7 +35,7 @@ const Header = ({ setCoordinates }) => {
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
-              <InputBase placeholder="Search ... " classes={{ root: classes.inputRoot, input: classes.inputInput }} />
+              <InputBase placeholder="Search ..." classes={{ root: classes.inputRoot, input: classes.inputInput }} />
             </div>
           </Autocomplete>
         </Box>

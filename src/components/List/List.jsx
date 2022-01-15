@@ -13,6 +13,7 @@ const List = ({ places, clickedChild, isLoading, type, setType, rating, setRatin
     const refs = Array(places?.length).fill().map((_, i) => elRefs[i] || createRef());
     setElRefs(refs);
   },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   [places])  
 
   return (
