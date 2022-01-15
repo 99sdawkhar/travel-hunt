@@ -14,7 +14,7 @@ export default makeStyles(() => ({
     fontWeight: '600',
   },
   mapContainer: {
-    height: '85vh', 
+    height: '100vh', 
     width: '100%',
   },
   markerContainer: {

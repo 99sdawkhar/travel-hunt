@@ -69,10 +69,10 @@ const App = () => {
     <div>
       <CssBaseline />
       <Header setCoordinates={setCoordinates} />
-      <Grid container spacing={3} style={{ width: '100%', marginTop:"10px" }}>
-        <Grid item xs={12} md={4}>
+      <Grid container style={{ width: '100%', paddingTop:"10px",borderBottom: '1px solid #143050' }}>
+        <Grid item xs={12} md={4} style={{ borderRight: '1px solid #143050'}}>
           <List 
-            places={filteredPlaces.length > 0 ? filteredPlaces : places}
+            places={filteredPlaces?.length > 0 ? filteredPlaces : places}
             clickedChild={clickedChild}
             isLoading={isLoading}
             type={type}
@@ -86,7 +86,7 @@ const App = () => {
             coordinates={coordinates}
             setCoordinates={setCoordinates}
             setBounds={setBounds}
-            places={filteredPlaces.length ? filteredPlaces : places}
+            places={filteredPlaces?.length > 0 ? filteredPlaces : places}
             setClickedChild={setClickedChild}
             weatherData={weatherData}
           />
