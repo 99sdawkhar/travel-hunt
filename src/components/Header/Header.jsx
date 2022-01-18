@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Autocomplete } from '@react-google-maps/api'
 import { AppBar, Toolbar, Typography, InputBase, Box } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
@@ -9,15 +9,6 @@ const Header = ({ setCoordinates }) => {
   const classes = useStyles();
   const [autoComplete, setAutoComplete] = useState(null);
 
-
-
-  // useLayoutEffect(() => {
-  //   const script = document.createElement("script");
-
-  //   script.src = `https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_MAP_API}`;
-  //   script.defer = true;
-  //   document.head.appendChild(script);
-  // }, [])
   const onLoad = (complete) => setAutoComplete(complete);
 
   const onPlaceChanged = () => {
