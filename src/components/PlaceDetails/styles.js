@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles(() => ({
+export default makeStyles((theme) => ({
   chip: {
     margin: '5px 5px 5px 0',
   },
@@ -15,4 +15,14 @@ export default makeStyles(() => ({
     alignItems: 'center', 
     justifyContent: 'space-between',
   },
+  anchor: {
+    textDecoration: 'none',
+    color: 'inherit',
+  },
+  cardImage: {
+    height: '300px',
+    [theme.breakpoints.up('md')]: {
+      height: '200px',
+    }
+  }
 }));

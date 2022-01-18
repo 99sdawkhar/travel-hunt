@@ -13,6 +13,7 @@ const Map = ({
   coordinates,
   setCoordinates,
   setBounds,
+  bounds,
   places,
   setClickedChild,
   weatherData,
@@ -22,7 +23,6 @@ const Map = ({
   const weatherInfo = weatherData.data;
 
   const geoLocationStatus = useGeoLocation();
-
   return (
     <div className={classes.mapContainer}>
       {geoLocationStatus === 'denied' ? (
@@ -63,7 +63,7 @@ const Map = ({
                 <Paper elevation={3} className={classes.paper}>
                   <Typography
                     gutterBottom
-                    variant="subtitle"
+                    variant="p"
                     className={classes.typography}
                   >
                     {place.name}
@@ -92,10 +92,10 @@ const Map = ({
               )}
             </div>
           ))}
-          {weatherInfo && (
+        {weatherInfo && (
             <div
-              lat={weatherInfo.coord.lat}
-              lng={weatherInfo.coord.lon}
+              lat={bounds.ne.lat}
+              lng={bounds.ne.lng}
               className={classes.weatherInfo}
             >
               <figure>
@@ -103,6 +103,7 @@ const Map = ({
                   src={`http://openweathermap.org/img/w/${weatherInfo.weather[0].icon}.png`}
                   alt={weatherInfo.weather[0].main}
                 />
+                <figcaption>{weatherInfo.weather[0].main} {Math.round(parseFloat(weatherInfo.main.temp)-273.15)}&deg;</figcaption>
               </figure>
             </div>
           )}

@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
+import Error from "../Error/Error";
 
 import useGeoLocation from "../../hooks/useGeoLocation";
 
@@ -23,6 +24,7 @@ const List = ({
   setType,
   rating,
   setRating,
+  hasError
 }) => {
   const classes = useStyles();
   const [elRefs, setElRefs] = useState([]);
@@ -62,15 +64,20 @@ const List = ({
           <MenuItem value={4.5}>Above 4.5</MenuItem>
         </Select>
       </FormControl>
-      {isLoading ? (
-        <div className={classes.loading}>
-          <CircularProgress size="5rem" />
-        </div>
-      ) : (
-        <>
-          {geoLocationStatus === "denied" ? (
-            <p>Please enable your location.</p>
-          ) : (
+      {
+        geoLocationStatus === "denied" ? (
+          <Error>Please enable your location.</Error>
+        ) : (
+        isLoading ? (
+          <div className={classes.loading}>
+            {hasError ? 
+              <Error>Something went wrong!</Error> : 
+              <CircularProgress size="5rem" />
+            }
+          </div>
+        ) : (
+          hasError ? <Error>Something went wrong!</Error> :
+          <>
             <Grid container spacing={3} className={classes.list}>
               {places?.map((place, i) => (
                 <Grid ref={elRefs[i]} item key={i} xs={12}>
@@ -82,9 +89,9 @@ const List = ({
                 </Grid>
               ))}
             </Grid>
-          )}
-        </>
-      )}
+          </>
+        ))
+      }
     </div>
   );
 };

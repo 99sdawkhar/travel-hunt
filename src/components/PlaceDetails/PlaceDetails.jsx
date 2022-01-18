@@ -16,30 +16,30 @@ const PlaceDetails = ({ place, selected, refProp }) => {
   return (
     <Card elevation={6}>
       <CardMedia 
-        style={{ height: 350 }} 
-        image={place.photo ? place.photo.images.medium.url : 'https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'}
+        className={classes.cardImage} 
+        image={place.photo ? place.photo.images.large.url : 'https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'}
         title={place.name}
       />
       <CardContent>
-        <Typography gutterBottom varinat="h5">{place.name}</Typography>
-        <Box display="flex" justifyContent="space-between">
+        <Typography gutterBottom variant="h5">{place.name}</Typography>
+        {place?.num_reviews && <Box display="flex" justifyContent="space-between">
           <Rating value={Number(place.rating)} readOnly />
-          <Typography gutterBottom varinat="subtitle">out of {place.num_reviews} reviews</Typography>
-        </Box>
-        <Box display="flex" justifyContent="space-between">
-          <Typography varinat="subtitle">Price Range</Typography>
-          <Typography gutterBottom varinat="subtitle">{place.price_level}</Typography>
-        </Box>
-        <Box display="flex" justifyContent="space-between">
-          <Typography varinat="subtitle">Ranking</Typography>
-          <Typography gutterBottom varinat="subtitle">{place.ranking}</Typography>
-        </Box>
+          <Typography gutterBottom varinat="p">out of {place.num_reviews} reviews</Typography>
+        </Box>}
+        {place?.price_level && <Box display="flex" justifyContent="space-between">
+          <Typography varinat="p">Price Range</Typography>
+          <Typography gutterBottom varinat="p">{place.price_level}</Typography>
+        </Box>}
+        {place?.ranking &&<Box display="flex" justifyContent="space-between">
+          <Typography varinat="p">Ranking</Typography>
+          <Typography gutterBottom varinat="p">{place.ranking}</Typography>
+        </Box>}
         {place?.awards?.map((award) => (
           <Box key={award.display_name} my={1} display="flex" justifyContent="space-between" alignItems="center">
             <figure>
               <img src={award.images.small} alt={award.display_name} />
             </figure>
-            <Typography varinat="subtitle2" color="textSecondary">{award.display_name}</Typography>
+            <Typography varinat="p2" color="textSecondary">{award.display_name}</Typography>
           </Box>
         ))}
         {place?.cuisine?.map(({ name }) => (
@@ -49,15 +49,15 @@ const PlaceDetails = ({ place, selected, refProp }) => {
           <Typography gutterBottom variant="body2" color="textSecondary" className={classes.subtitle}><LocationOnIcon /> {place.address} </Typography>
         )}
         {place?.phone && (
-          <Typography gutterBottom variant="body2" color="textSecondary" className={classes.spacing}><PhoneIcon /> {place.phone} </Typography>
+          <Typography gutterBottom variant="body2" color="textSecondary" className={classes.spacing}><a className={classes.anchor} href={`tel:${place.phone}`} title="phone"><PhoneIcon /></a> {place.phone} </Typography>
         )}
         <CardActions>
-          <Button size="small" color="#143050" onClick={() => window.open(place.web_url, '_blank')}>
+          {place?.web_url && <Button size="small" color="#143050" onClick={() => window.open(place.web_url, '_blank')}>
             Trip Advisor
-          </Button>
-          <Button size="small" color="#143050" onClick={() => window.open(place.website, '_blank')}>
+          </Button>}
+          {place?.website && <Button size="small" color="#143050" onClick={() => window.open(place.website, '_blank')}>
             Website
-          </Button>
+          </Button>}
         </CardActions>
       </CardContent>
     </Card>

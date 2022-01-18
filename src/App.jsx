@@ -1,6 +1,5 @@
 import { CssBaseline, Grid } from '@material-ui/core'
 import React, { useEffect, useState } from 'react';
-
 import './index.css'
 
 import { getCurrentWeather, getPlacesData } from './api';
@@ -11,6 +10,7 @@ import List from './components/List/List';
 import Footer from './components/Footer/Footer';
 
 const App = () => {
+
   const [places, setPlaces] = useState([]);
   const [weatherData, setWeatherData] = useState([])
   const [filteredPlaces, setFilteredPlaces] = useState([]);
@@ -24,6 +24,7 @@ const App = () => {
   const [clickedChild, setClickedChild] = useState(null);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -33,12 +34,17 @@ const App = () => {
         lng: position.coords.longitude
       })
     });
-    getPlacesData()
+    if (bounds.ne && bounds.sw) {
+    getPlacesData(type, bounds.ne, bounds.sw)
       .then((data) => {
         setPlaces(data?.filter((place) => place.name && place.num_reviews > 0))
         setIsLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setHasError(true);
+        console.log(err);
+      });
+    }
   }, [])
 
   useEffect(() => {
@@ -53,16 +59,24 @@ const App = () => {
       getCurrentWeather(coordinates.lat, coordinates.lng)
       .then((data) => {
         setWeatherData(data);
+        setHasError(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setHasError(true)
+        console.log(err);
+      });
 
       getPlacesData(type, bounds.ne, bounds.sw)
       .then((data) => {
         setPlaces(data?.filter((place) => place.name && place.num_reviews > 0))
         setFilteredPlaces([]);
         setIsLoading(false);
+        setHasError(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setHasError(true);
+        console.log(err);
+      });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, bounds])
@@ -81,6 +95,7 @@ const App = () => {
             setType={setType}
             rating={rating}
             setRating={setRating}
+            hasError={hasError}
           />
         </Grid>
         <Grid item xs={12} md={8}>
@@ -88,6 +103,7 @@ const App = () => {
             coordinates={coordinates}
             setCoordinates={setCoordinates}
             setBounds={setBounds}
+            bounds={bounds}
             places={filteredPlaces?.length > 0 ? filteredPlaces : places}
             setClickedChild={setClickedChild}
             weatherData={weatherData}

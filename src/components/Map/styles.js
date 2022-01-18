@@ -12,6 +12,7 @@ export default makeStyles(() => ({
   typography: {
     fontSize: '16px',
     fontWeight: '600',
+    textAlign: 'center',
   },
   mapContainer: {
     height: '100vh', 
@@ -45,10 +46,16 @@ export default makeStyles(() => ({
     }
   },
   weatherInfo: {
-    position: 'fixed',
-    top: '0',
-    zIndex: 100,
-    transform: 'scale(1.5)',
+    display: 'flex',
+    background: '#fff',
+    transform: 'translate(-6px,7px)',
+    '& figure': {
+      background: '#fff',
+    },
+    '& figcaption': {
+      fontSize: '12px',
+      textAlign: 'center'
+    }
   },
   dummyMap: {
     width: '100%',
