@@ -1,29 +1,23 @@
 import axios from "axios";
 
-export const getPlacesData = async (type, ne, sw) => {
-  try {
-    const { data: { data } } = await axios.get(`https://travel-advisor.p.rapidapi.com/${type}/list-in-boundary`, {
-      params: {
-        bl_latitude: ne.lat,
-        tr_latitude: sw.lat,
-        bl_longitude: ne.lng,
-        tr_longitude: sw.lng,
-      },
-      headers: {
-        'x-rapidapi-host': 'travel-advisor.p.rapidapi.com',
-        'x-rapidapi-key': process.env.REACT_APP_RAPID_API
-      }
-    });
+export const getPlacesData = async (type, ne = null, sw = null) => {
+  const { data: { data } } = await axios.get(`https://travel-advisor.p.rapidapi.com/${type}/list-in-boundary`, {
+    params: {
+      bl_latitude: ne.lat,
+      tr_latitude: sw.lat,
+      bl_longitude: ne.lng,
+      tr_longitude: sw.lng,
+    },
+    headers: {
+      'x-rapidapi-host': 'travel-advisor.p.rapidapi.com',
+      'x-rapidapi-key': process.env.REACT_APP_RAPID_API
+    }
+  });
 
-    return data;
-
-  } catch (err) {
-    console.log(err);
-  }
+  return data;
 }
 
 export const getCurrentWeather = async (lat, lng) => {
-  try {
     const data  = axios.get('https://community-open-weather-map.p.rapidapi.com/weather', {
       params: {
         lat: lat,
@@ -35,7 +29,4 @@ export const getCurrentWeather = async (lat, lng) => {
       }
     })
     return data;
-  } catch (err) {
-    console.log(err);
-  }
 }
